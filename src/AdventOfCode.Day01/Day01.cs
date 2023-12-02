@@ -1,5 +1,4 @@
 ﻿using System.Text.RegularExpressions;
-using Microsoft.VisualBasic;
 
 namespace AdventOfCode.Day01;
 
@@ -26,7 +25,7 @@ public partial class Day01
         return sum;
     }
 
-    public string Find(string input)
+    public static string Find(string input)
     {
         var numberWords = new Dictionary<string, string?>
         {
@@ -75,9 +74,4 @@ public partial class Day01
         }
         return sum;
     }
-
-    [GeneratedRegex("[0-9]")]
-    private static partial Regex IsNumeric();
-    [GeneratedRegex("[^0-9]")]
-    private static partial Regex IsNotNumeric();
 }

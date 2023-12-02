@@ -42,7 +42,7 @@ public class Day01
     {
         var empty = Enumerable.Empty<string>().ToArray();
         var day01 = new AdventOfCode.Day01.Day01(empty);
-        var result = day01.Find(input);
+        var result = AdventOfCode.Day01.Day01.Find(input);
         Assert.Equal(expected, result);
     }
 
