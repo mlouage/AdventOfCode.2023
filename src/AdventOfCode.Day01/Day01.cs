@@ -2,7 +2,7 @@
 
 namespace AdventOfCode.Day01;
 
-public partial class Day01
+public class Day01
 {
     private readonly string[] _input;
 
