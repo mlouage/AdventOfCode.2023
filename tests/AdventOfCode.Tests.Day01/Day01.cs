@@ -38,6 +38,7 @@ public class Day01
     [InlineData("9963onefourthree6oneightq", "91")]
     [InlineData("9963onefourthree6oneightwo", "92")]
     [InlineData("9oneighthree9", "99")]
+    [InlineData("51", "51")]
     public void FindTest(string input, string expected)
     {
         var empty = Enumerable.Empty<string>().ToArray();
