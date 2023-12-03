@@ -6,6 +6,28 @@ public class Day01
 {
     private readonly string[] _input;
 
+    private Dictionary<string, int> _numberWords = new Dictionary<string, int>
+    {
+        { "one", 1 },
+        { "two", 2 },
+        { "three", 3 },
+        { "four", 4 },
+        { "five", 5 },
+        { "six", 6 },
+        { "seven", 7 },
+        { "eight", 8 },
+        { "nine", 9 },
+        { "1", 1 },
+        { "2", 2 },
+        { "3", 3 },
+        { "4", 4 },
+        { "5", 5 },
+        { "6", 6 },
+        { "7", 7 },
+        { "8", 8 },
+        { "9", 9 }
+    };
+
     public Day01(string[] input)
     {
         _input = input;
@@ -16,62 +38,53 @@ public class Day01
         var sum = 0;
         foreach (var line in _input)
         {
-            var first = Regex.Replace(line, "[^0-9]", string.Empty).First();
-            var last = Regex.Replace(line, "[^0-9]", string.Empty).Last();
+            var numbers = Regex.Replace(line, "[^0-9]", string.Empty);
+
+            if (string.IsNullOrWhiteSpace(numbers)) continue;
+
+            var first = numbers.First().ToString();
+            var last = numbers.Last().ToString();
+
             var number = $"{first}{last}";
             sum += int.Parse(number);
-
         }
         return sum;
-    }
-
-    public static string Find(string input)
-    {
-        var numberWords = new Dictionary<string, string?>
-        {
-            { "one", "1" },
-            { "two", "2" },
-            { "three", "3" },
-            { "four", "4" },
-            { "five", "5" },
-            { "six", "6" },
-            { "seven", "7" },
-            { "eight", "8" },
-            { "nine", "9" },
-            { "1", "1" },
-            { "2", "2" },
-            { "3", "3" },
-            { "4", "4" },
-            { "5", "5" },
-            { "6", "6" },
-            { "7", "7" },
-            { "8", "8" },
-            { "9", "9" }
-        };
-
-        var pattern = string.Join("|", numberWords.Keys);
-        var matches = Regex.Matches(input, $"[0-9]|{pattern}", RegexOptions.IgnoreCase);
-
-        if (matches.Count == 0)
-        {
-            return "00";
-        }
-
-        var first = matches.OrderBy(m => m.Index).First();
-        var last = matches.OrderBy(m => m.Index).Last();
-
-        return $"{numberWords[first.Value]}{numberWords[last.Value]}";
     }
 
     public int Part2()
     {
-        var sum = 0;
+        var totalSum = 0;
+
         foreach (var line in _input)
         {
-            var number = Find(line);
-            sum += int.Parse(number);
+            var firstDigit = -1;
+            var lastDigit = -1;
+            var firstDigitIndex = int.MaxValue;
+            var lastDigitIndex = -1;
 
+            foreach (var pair in _numberWords)
+            {
+                var firstIndex = line.IndexOf(pair.Key);
+                var lastIndex = line.LastIndexOf(pair.Key);
+
+                if (firstIndex >= 0 && firstIndex < firstDigitIndex)
+                {
+                    firstDigitIndex = firstIndex;
+                    firstDigit = pair.Value;
+                }
+
+                if (lastIndex <= lastDigitIndex) continue;
+
+                lastDigitIndex = lastIndex;
+                lastDigit = pair.Value;
+            }
+
+            if (firstDigit != -1 && lastDigit != -1)
+            {
+                totalSum += firstDigit * 10 + lastDigit;
+            }
         }
-        return sum;
+
+        return totalSum;
     }
 }
