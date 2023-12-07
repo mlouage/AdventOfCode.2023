@@ -14,22 +14,25 @@ public class Day05
     private const string HumidityToLocationMapKey = "humidity-to-location";
 
     private readonly IList<ulong> _seeds = new List<ulong>();
-    private readonly List<SeedBucket> _seedsBucket = new();
+    private readonly List<SeedRange> _seedRanges = new();
     
-    private readonly IList<Bucket> _seedToSoilList = new List<Bucket>();
-    private readonly IList<Bucket> _soilToFertilizerList = new List<Bucket>();
-    private readonly IList<Bucket> _fertilizerToWaterList = new List<Bucket>();
-    private readonly IList<Bucket> _waterToLightList = new List<Bucket>();
-    private readonly IList<Bucket> _lightToTemperatureList = new List<Bucket>();
-    private readonly IList<Bucket> _temperatureToHumidityList = new List<Bucket>();
-    private readonly IList<Bucket> _humidityToLocationList = new List<Bucket>();
+    private readonly IList<Range> _seedToSoilList = new List<Range>();
+    private readonly IList<Range> _soilToFertilizerList = new List<Range>();
+    private readonly IList<Range> _fertilizerToWaterList = new List<Range>();
+    private readonly IList<Range> _waterToLightList = new List<Range>();
+    private readonly IList<Range> _lightToTemperatureList = new List<Range>();
+    private readonly IList<Range> _temperatureToHumidityList = new List<Range>();
+    private readonly IList<Range> _humidityToLocationList = new List<Range>();
 
-    private readonly IDictionary<string, IList<Bucket>> _lists =
-        new Dictionary<string, IList<Bucket>>();
+    private readonly IDictionary<string, IList<Range>> _lists =
+        new Dictionary<string, IList<Range>>();
 
-    private record Bucket(ulong Source, ulong Destination, ulong Length);
+    private record Range(ulong Source, ulong Destination, ulong Length);
 
-    private record SeedBucket(ulong Start, ulong Length);
+    private record SeedRange(ulong Start, ulong Length)
+    {
+        public ulong End => Start + Length;
+    }
 
     public Day05(string[] input)
     {
@@ -76,11 +79,11 @@ public class Day05
 
         var minimumLocation = ulong.MaxValue;
 
-        foreach (var seedBucket in _seedsBucket)
+        foreach (var seedRange in _seedRanges)
         {
-            for (ulong i = 0; i <= seedBucket.Length - 1; i++)
+            for (ulong i = 0; i <= seedRange.Length - 1; i++)
             {
-                var seed = seedBucket.Start + i;
+                var seed = seedRange.Start + i;
 
                 var soil = Map(seed, SeedToSoilMapKey);
                 var fertilizer = Map(soil, SoilToFertilizerMapKey);
@@ -165,7 +168,7 @@ public class Day05
 
             var list = _lists[activeMapperKey];
 
-            list.Add(new Bucket(source, destination, length));
+            list.Add(new Range(source, destination, length));
         }
     }
 
@@ -173,11 +176,11 @@ public class Day05
     {
         var list = _lists[mapKey];
 
-        foreach (var bucket in list)
+        foreach (var range in list)
         {
-            if (value >= bucket.Source && value <= bucket.Source + bucket.Length)
+            if (value >= range.Source && value <= range.Source + range.Length)
             {
-                return bucket.Destination + (value - bucket.Source);
+                return range.Destination + (value - range.Source);
             }
         }
 
@@ -192,7 +195,7 @@ public class Day05
 
         for(var i = 0; i <= seeds.Count - 1; i += 2)
         {
-            _seedsBucket.Add(new SeedBucket(seeds[i], seeds[i + 1]));
+            _seedRanges.Add(new SeedRange(seeds[i], seeds[i + 1]));
         }
     }
 }
