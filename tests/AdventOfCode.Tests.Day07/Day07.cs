@@ -56,6 +56,6 @@ public class Day07
 
         _output.WriteLine($"Sum: {sum}");
 
-        Assert.Equal(0, sum);
+        Assert.Equal(250665248, sum);
     }
 }
