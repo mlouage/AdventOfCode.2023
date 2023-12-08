@@ -14,7 +14,7 @@ public class Day01
     [Fact]
     public async Task Part1TestDataTest()
     {
-        var data = await File.ReadAllLinesAsync("Data/test.txt");
+        var data = await File.ReadAllLinesAsync("Data/test_part1.txt");
 
         var day01 = new AdventOfCode.Day01.Day01(data);
         var sum = day01.Part1();
@@ -40,7 +40,7 @@ public class Day01
     [Fact]
     public async Task Part2TestDataTest()
     {
-        var data = await File.ReadAllLinesAsync("Data/test.txt");
+        var data = await File.ReadAllLinesAsync("Data/test_part2.txt");
 
         var day01 = new AdventOfCode.Day01.Day01(data);
         var sum = day01.Part2();

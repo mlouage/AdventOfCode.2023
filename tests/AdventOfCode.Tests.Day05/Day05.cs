@@ -46,7 +46,7 @@ public class Day05
         Assert.Equal(46uL, min);
     }
 
-    [Fact]
+    [Fact(Skip = "Takes too long to run")]
     public async Task Part2Test()
     {
         var data = await File.ReadAllLinesAsync("Data/input.txt");

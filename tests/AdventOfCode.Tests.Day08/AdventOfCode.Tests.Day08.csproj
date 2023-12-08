@@ -23,19 +23,19 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\src\AdventOfCode.Day08\AdventOfCode.Day08.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
       <None Update="Data\input.txt">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Data\test.txt">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
       <None Update="Data\test_part2.txt">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
-      <None Update="Data\test_part1.txt">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
-    </ItemGroup>
-
-    <ItemGroup>
-      <ProjectReference Include="..\..\src\AdventOfCode.Day01\AdventOfCode.Day01.csproj" />
     </ItemGroup>
 
 </Project>
